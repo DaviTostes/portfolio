@@ -1,41 +1,51 @@
-import { useState } from 'react'
+import { Component } from 'react'
 import './styles.css'
 
-function Home() {
+import About from '../../components/about'
+import ProjectCard from '../../components/projectCard'
+import loadProjects from '../../utils/loadProjects'
 
-  return (
-    <div className="Home">
-      <header>
-        <div className="link-wrapper">
-          <a href="#about">ABOUT</a>
-          <a href="#projects">PROJECTS</a>
-          <a href="">CONTACT</a>
-        </div>
-      </header>
-      <main>
-        <div className="about-wrapper" id='about'>
-          <div className="pic-wrapper">
-            <img src="src\assets\profilePic.jpg" alt="profile-pic" />
+class Home extends Component {
+  state = {
+    projects: []
+  }
+
+  async componentDidMount() {
+    this.setState({ projects: await loadProjects() })
+  }
+
+  componentDidUpdate() {
+    const {projects} = this.state
+
+    console.log(projects)
+  }
+
+  render() {
+    const {projects} = this.state
+
+    return (
+      <div className="Home">
+        <header>
+          <div className="link-wrapper">
+            <a href="#about">ABOUT</a>
+            <a href="#projects">PROJECTS</a>
+            <a href="">CONTACT</a>
           </div>
-          <div className="title-wrapper">
-            <h1>Hi, I'm Davi Tostes👋</h1>
-            <h1 id='dev'>Front-end Developer</h1>
-            <div className="line"></div>
-            <h2>About:</h2>
-            <p>
-              Desenvolvedor front-end com conhecimentos em React, JavaScript, HTML, CSS e Nextjs. Cursando bacharel em Sistemas de Informação e procurando
-              uma vaga para desenvolvedor junior ou estágio.
-            </p>
-            <div className="cv-wrapper">
-              <a href="./assets/daviTostesCV.pdf" download>Download CV</a>
+        </header>
+        <main>
+          <About />
+          <div className="projects" id="projects">
+            <h2>Projects in Deploy</h2>
+            <div className="projects-wrapper">
+              {
+                projects.map((project, index) => <ProjectCard key={index} name={project.name} page={project.homepage} language={project.language} />)
+              }
             </div>
           </div>
-        </div>
-        <div className="project-wrapper" id="projects">
-        </div>
-      </main>
-    </div>
-  )
+        </main>
+      </div>
+    )
+  }
 }
 
 export default Home
