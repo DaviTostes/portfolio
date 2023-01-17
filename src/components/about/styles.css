@@ -80,3 +80,26 @@
   text-decoration: none;
   color: aliceblue;
 }
+
+.social-wrapper {
+  height: 50px;
+
+  display: flex;
+  align-items: center;
+  gap: 30px;
+
+  margin-top: 10px;
+}
+
+.social-wrapper a{
+  color: aliceblue;
+}
+
+.social-wrapper a:visited {
+  color: aliceblue;
+}
+
+.icon {
+  width: 30px;
+  height: 30px;
+}

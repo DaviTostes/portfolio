@@ -14,12 +14,6 @@ class Home extends Component {
     this.setState({ projects: await loadProjects() })
   }
 
-  componentDidUpdate() {
-    const {projects} = this.state
-
-    console.log(projects)
-  }
-
   render() {
     const {projects} = this.state
 
