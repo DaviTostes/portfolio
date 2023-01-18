@@ -1,0 +1,17 @@
+.projects {
+  position: absolute;
+  left: 50%;
+  top: 70%;
+  transform: translate(-50%, -50%);
+
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 30px;
+}
+
+.projects-wrapper {
+  display: flex;
+  gap: 30px;
+}

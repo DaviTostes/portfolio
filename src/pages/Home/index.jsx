@@ -2,8 +2,9 @@ import { Component } from 'react'
 import './styles.css'
 
 import About from '../../components/about'
-import ProjectCard from '../../components/projectCard'
+import Projects from '../../components/projects'
 import loadProjects from '../../utils/loadProjects'
+import ContactMe from '../../components/contactMe'
 
 class Home extends Component {
   state = {
@@ -23,19 +24,13 @@ class Home extends Component {
           <div className="link-wrapper">
             <a href="#about">ABOUT</a>
             <a href="#projects">PROJECTS</a>
-            <a href="">CONTACT</a>
+            <a href="#contact">CONTACT</a>
           </div>
         </header>
         <main>
           <About />
-          <div className="projects" id="projects">
-            <h2>Projects in Deploy</h2>
-            <div className="projects-wrapper">
-              {
-                projects.map((project, index) => <ProjectCard key={index} name={project.name} page={project.homepage} language={project.language} />)
-              }
-            </div>
-          </div>
+          <Projects projects={projects} />
+          <ContactMe />
         </main>
       </div>
     )
