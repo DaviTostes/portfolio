@@ -3,6 +3,8 @@ import { FaGithub } from 'react-icons/fa'
 import { SiLinkedin } from "react-icons/si";
 import { SiTwitter } from "react-icons/si";
 
+import profilePic from '../../assets/profilePic.jpg'
+
 const About = () => {
   return (
     <div className="about-wrapper" id='about'>
@@ -19,7 +21,7 @@ const About = () => {
           uma vaga para desenvolvedor junior ou estágio.
         </p>
         <div className="cv-wrapper">
-          <a href="./assets/daviTostesCV.pdf" download>Download CV</a>
+          <a href={profilePic} download>Download CV</a>
         </div>
         <div className="social-wrapper">
           <a target="_blank" href="https://github.com/DaviTostes" ><FaGithub className='icon'/></a>
