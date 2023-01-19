@@ -4,6 +4,7 @@ import { FaGithub } from 'react-icons/fa'
 import { SiLinkedin } from "react-icons/si";
 import { SiTwitter } from "react-icons/si";
 
+import cv from '../../assets/daviTostesCV.pdf'
 import loadProfilePic from '../../utils/loadProfilePic';
 import { Component, useEffect, useState } from 'react';
 
@@ -34,7 +35,7 @@ class About extends Component {
             uma vaga para desenvolvedor junior ou estágio.
           </p>
           <div className="cv-wrapper">
-            <a href="src\assets\daviTostesCV.pdf" download>Download CV</a>
+            <a href={cv} download>Download CV</a>
           </div>
           <div className="social-wrapper">
             <a target="_blank" href="https://github.com/DaviTostes" ><FaGithub className='icon'/></a>
