@@ -1,11 +1,19 @@
 import './styles.css'
+
 import { FaGithub } from 'react-icons/fa'
 import { SiLinkedin } from "react-icons/si";
 import { SiTwitter } from "react-icons/si";
 
-import profilePic from '../../assets/profilePic.jpg'
+import loadProfilePic from '../../utils/loadProfilePic';
+import { useEffect, useState } from 'react';
 
 const About = () => {
+  const [profilePic, setProfilePic] = useState('')
+
+  useEffect(() => {
+    setProfilePic(loadProfilePic())
+  }, [])
+
   return (
     <div className="about-wrapper" id='about'>
       <div className="pic-wrapper">
