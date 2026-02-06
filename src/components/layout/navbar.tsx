@@ -2,9 +2,18 @@
 
 import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { Terminal, Menu, X } from "lucide-react";
+import {
+  Terminal,
+  Menu,
+  X,
+  Sun,
+  Moon,
+  Palette,
+} from "lucide-react";
 import { cn } from "@/lib/utils";
 import { useNavigationStore } from "@/store/navigation-store";
+import { useThemeStore } from "@/store/theme-store";
+import type { ThemeVariant } from "@/types";
 
 const navItems = [
   { id: "hero", label: "~/home" },
@@ -15,10 +24,20 @@ const navItems = [
   { id: "contact", label: "~/contact" },
 ];
 
+const themeOptions: { id: ThemeVariant; label: string }[] = [
+  { id: "default", label: "Default" },
+  { id: "dracula", label: "Dracula" },
+  { id: "nord", label: "Nord" },
+  { id: "gruvbox", label: "Gruvbox" },
+  { id: "monokai", label: "Monokai" },
+];
+
 export function Navbar() {
   const { activeSection, mobileMenuOpen, setMobileMenuOpen } =
     useNavigationStore();
+  const { theme, toggleTheme, variant, setVariant } = useThemeStore();
   const [scrolled, setScrolled] = useState(false);
+  const [showThemeMenu, setShowThemeMenu] = useState(false);
 
   useEffect(() => {
     const handleScroll = () => setScrolled(window.scrollY > 20);
@@ -42,7 +61,9 @@ export function Navbar() {
         transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
         className={cn(
           "fixed top-0 left-0 right-0 z-50 transition-all duration-300",
-          scrolled ? "glass shadow-lg shadow-black/5" : "bg-transparent",
+          scrolled
+            ? "glass shadow-lg shadow-black/5"
+            : "bg-transparent"
         )}
       >
         <nav className="mx-auto flex max-w-7xl items-center justify-between px-4 py-3 sm:px-6 lg:px-8">
@@ -70,7 +91,7 @@ export function Navbar() {
                   "relative px-3 py-1.5 font-mono text-xs transition-colors rounded-md",
                   activeSection === item.id
                     ? "text-[var(--color-accent)]"
-                    : "text-[var(--color-text-muted)] hover:text-[var(--color-text)]",
+                    : "text-[var(--color-text-muted)] hover:text-[var(--color-text)]"
                 )}
               >
                 {activeSection === item.id && (
@@ -87,6 +108,63 @@ export function Navbar() {
 
           {/* Controls */}
           <div className="flex items-center gap-2">
+            {/* Theme Variant Selector */}
+            <div className="relative">
+              <button
+                onClick={() => setShowThemeMenu(!showThemeMenu)}
+                className="flex h-8 w-8 items-center justify-center rounded-md border border-[var(--color-border)] bg-[var(--color-surface)] transition-colors hover:border-[var(--color-accent)]"
+                aria-label="Change theme variant"
+              >
+                <Palette className="h-4 w-4 text-[var(--color-text-muted)]" />
+              </button>
+
+              <AnimatePresence>
+                {showThemeMenu && (
+                  <motion.div
+                    initial={{ opacity: 0, y: -10, scale: 0.95 }}
+                    animate={{ opacity: 1, y: 0, scale: 1 }}
+                    exit={{ opacity: 0, y: -10, scale: 0.95 }}
+                    transition={{ duration: 0.15 }}
+                    className="absolute right-0 top-10 glass rounded-lg p-1 min-w-[140px] z-50"
+                  >
+                    {themeOptions.map((opt) => (
+                      <button
+                        key={opt.id}
+                        onClick={() => {
+                          setVariant(opt.id);
+                          setShowThemeMenu(false);
+                        }}
+                        className={cn(
+                          "flex w-full items-center gap-2 rounded-md px-3 py-1.5 font-mono text-xs transition-colors",
+                          variant === opt.id
+                            ? "bg-[var(--color-accent)]/10 text-[var(--color-accent)]"
+                            : "text-[var(--color-text-muted)] hover:text-[var(--color-text)] hover:bg-[var(--color-surface)]"
+                        )}
+                      >
+                        {variant === opt.id && (
+                          <span className="text-[var(--color-green)]">{">"}</span>
+                        )}
+                        {opt.label}
+                      </button>
+                    ))}
+                  </motion.div>
+                )}
+              </AnimatePresence>
+            </div>
+
+            {/* Light/Dark Toggle */}
+            <button
+              onClick={toggleTheme}
+              className="flex h-8 w-8 items-center justify-center rounded-md border border-[var(--color-border)] bg-[var(--color-surface)] transition-colors hover:border-[var(--color-accent)]"
+              aria-label="Toggle theme"
+            >
+              {theme === "dark" ? (
+                <Sun className="h-4 w-4 text-[var(--color-yellow)]" />
+              ) : (
+                <Moon className="h-4 w-4 text-[var(--color-purple)]" />
+              )}
+            </button>
+
             {/* Mobile Menu Toggle */}
             <button
               onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
@@ -131,7 +209,7 @@ export function Navbar() {
                       "flex items-center gap-2 rounded-md px-3 py-2 font-mono text-sm transition-colors text-left",
                       activeSection === item.id
                         ? "bg-[var(--color-accent)]/10 text-[var(--color-accent)]"
-                        : "text-[var(--color-text-muted)] hover:text-[var(--color-text)]",
+                        : "text-[var(--color-text-muted)] hover:text-[var(--color-text)]"
                     )}
                   >
                     <span className="text-[var(--color-accent)]">$</span>

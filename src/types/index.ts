@@ -41,3 +41,5 @@ export interface SocialLink {
   url: string;
   icon: string;
 }
+
+export type ThemeVariant = "dracula" | "nord" | "gruvbox" | "monokai" | "default";
