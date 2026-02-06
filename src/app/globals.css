@@ -82,8 +82,14 @@ body {
 
 /* Terminal cursor blink */
 @keyframes cursor-blink {
-  0%, 50% { opacity: 1; }
-  51%, 100% { opacity: 0; }
+  0%,
+  50% {
+    opacity: 1;
+  }
+  51%,
+  100% {
+    opacity: 0;
+  }
 }
 
 .terminal-cursor {
@@ -117,28 +123,12 @@ body {
 
 /* Reduced motion */
 @media (prefers-reduced-motion: reduce) {
-  *, *::before, *::after {
+  *,
+  *::before,
+  *::after {
     animation-duration: 0.01ms !important;
     animation-iteration-count: 1 !important;
     transition-duration: 0.01ms !important;
     scroll-behavior: auto !important;
   }
-}
-
-/* Light theme overrides */
-[data-theme="light"] {
-  --color-bg: #fafafa;
-  --color-bg-secondary: #f4f4f5;
-  --color-text: #18181b;
-  --color-text-muted: #71717a;
-  --color-accent: #0891b2;
-  --color-accent-secondary: #7c3aed;
-  --color-border: #e4e4e7;
-  --color-surface: #ffffff;
-  --color-green: #16a34a;
-  --color-yellow: #ca8a04;
-  --color-red: #dc2626;
-  --color-blue: #2563eb;
-  --color-purple: #7c3aed;
-  --color-cyan: #0891b2;
 }
