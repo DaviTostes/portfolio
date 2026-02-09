@@ -2,16 +2,30 @@
 
 import { motion } from "framer-motion";
 import { useInView } from "react-intersection-observer";
-import { Code2, Briefcase, GraduationCap, Coffee } from "lucide-react";
+import { Code2, Briefcase, GraduationCap } from "lucide-react";
 import { SectionWrapper } from "@/components/animations/section-wrapper";
 import { personalInfo } from "@/data/personal";
 import { staggerContainer, staggerItem } from "@/utils/animation-variants";
 
 const highlights = [
-  { icon: Briefcase, label: "3+ Years", description: "Professional experience", color: "var(--color-accent)" },
-  { icon: Code2, label: "4 Companies", description: "Worked with", color: "var(--color-yellow)" },
-  { icon: GraduationCap, label: "8th Sem", description: "Information Systems", color: "var(--color-green)" },
-  { icon: Coffee, label: "∞", description: "Cups of coffee", color: "var(--color-red)" },
+  {
+    icon: Briefcase,
+    label: "3+ Years",
+    description: "Professional experience",
+    color: "var(--color-accent)",
+  },
+  {
+    icon: Code2,
+    label: "4 Companies",
+    description: "Worked with",
+    color: "var(--color-yellow)",
+  },
+  {
+    icon: GraduationCap,
+    label: "8th Sem",
+    description: "Information Systems",
+    color: "var(--color-green)",
+  },
 ];
 
 export function AboutSection() {
@@ -42,10 +56,7 @@ export function AboutSection() {
           ))}
 
           {/* Philosophy block */}
-          <motion.div
-            variants={staggerItem}
-            className="code-block p-4 mt-6"
-          >
+          <motion.div variants={staggerItem} className="code-block p-4 mt-6">
             <div className="flex items-center gap-2 mb-2">
               <span className="font-mono text-xs text-[var(--color-text-muted)]">
                 {"/**"}
