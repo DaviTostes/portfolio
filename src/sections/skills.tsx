@@ -25,57 +25,9 @@ const categoryColors: Record<SkillCategory, string> = {
   Languages: "var(--color-accent-secondary)",
 };
 
-function SkillBar({
-  name,
-  level,
-  color,
-  inView,
-  delay,
-}: {
-  name: string;
-  level: number;
-  color: string;
-  inView: boolean;
-  delay: number;
-}) {
-  const [isHovered, setIsHovered] = useState(false);
-
-  return (
-    <motion.div
-      initial={{ opacity: 0, x: -20 }}
-      animate={inView ? { opacity: 1, x: 0 } : {}}
-      transition={{ duration: 0.5, delay }}
-      onMouseEnter={() => setIsHovered(true)}
-      onMouseLeave={() => setIsHovered(false)}
-      className="group"
-    >
-      <div className="flex items-center justify-between mb-1.5">
-        <span className="font-mono text-sm text-[var(--color-text)] group-hover:text-[var(--color-accent)] transition-colors">
-          {name}
-        </span>
-        <motion.span
-          className="font-mono text-xs"
-          style={{ color }}
-          animate={{ opacity: isHovered ? 1 : 0.7 }}
-        >
-          {level}%
-        </motion.span>
-      </div>
-      <div className="h-2 overflow-hidden rounded-full bg-[var(--color-border)]/50">
-        <motion.div
-          className="h-full rounded-full"
-          style={{ backgroundColor: color }}
-          initial={{ width: 0 }}
-          animate={inView ? { width: `${level}%` } : { width: 0 }}
-          transition={{ duration: 1, delay: delay + 0.2, ease: [0.22, 1, 0.36, 1] }}
-        />
-      </div>
-    </motion.div>
-  );
-}
-
 export function SkillsSection() {
-  const [activeCategory, setActiveCategory] = useState<SkillCategory>("Frontend");
+  const [activeCategory, setActiveCategory] =
+    useState<SkillCategory>("Frontend");
   const { ref, inView } = useInView({ threshold: 0.2, triggerOnce: true });
 
   const filteredSkills = skills.filter((s) => s.category === activeCategory);
@@ -102,7 +54,7 @@ export function SkillsSection() {
                 <div className="h-2.5 w-2.5 rounded-full bg-[var(--color-green)]" />
               </div>
               <span className="font-mono text-[10px] text-[var(--color-text-muted)]">
-                skills.json
+                skills.ts
               </span>
             </div>
 
@@ -115,7 +67,7 @@ export function SkillsSection() {
                     "flex w-full items-center gap-2 rounded-md px-3 py-2 font-mono text-sm transition-all text-left",
                     activeCategory === cat
                       ? "bg-[var(--color-accent)]/10 text-[var(--color-accent)]"
-                      : "text-[var(--color-text-muted)] hover:text-[var(--color-text)] hover:bg-[var(--color-surface)]"
+                      : "text-[var(--color-text-muted)] hover:text-[var(--color-text)] hover:bg-[var(--color-surface)]",
                   )}
                 >
                   <span
@@ -138,20 +90,18 @@ export function SkillsSection() {
             {/* Decorative code */}
             <div className="mt-6 pt-4 border-t border-[var(--color-border)]">
               <pre className="font-mono text-[10px] leading-relaxed text-[var(--color-text-muted)]/50">
-{`{
-  "category": "${activeCategory}",
-  "skills": ${filteredSkills.length},
-  "avg_level": ${Math.round(
-    filteredSkills.reduce((a, b) => a + b.level, 0) /
-      filteredSkills.length
-  )}
-}`}
+                {`const ${activeCategory.toLowerCase()} = [
+  ${filteredSkills
+    .slice(0, 3)
+    .map((s) => `"${s.name}"`)
+    .join(",\n  ")}${filteredSkills.length > 3 ? ",\n  ..." : ""}
+];`}
               </pre>
             </div>
           </motion.div>
         </div>
 
-        {/* Skill bars */}
+        {/* Skills List */}
         <div className="lg:col-span-2">
           <AnimatePresence mode="wait">
             <motion.div
@@ -160,17 +110,30 @@ export function SkillsSection() {
               initial="hidden"
               animate="visible"
               exit={{ opacity: 0 }}
-              className="space-y-5"
+              className="flex flex-wrap gap-3"
             >
               {filteredSkills.map((skill, i) => (
-                <SkillBar
+                <motion.span
                   key={skill.name}
-                  name={skill.name}
-                  level={skill.level}
-                  color={categoryColors[activeCategory]}
-                  inView={inView}
-                  delay={i * 0.08}
-                />
+                  variants={staggerItem}
+                  initial={{ opacity: 0, scale: 0.8 }}
+                  animate={inView ? { opacity: 1, scale: 1 } : {}}
+                  transition={{ duration: 0.3, delay: i * 0.05 }}
+                  whileHover={{
+                    scale: 1.05,
+                    transition: { duration: 0.2 },
+                  }}
+                  className="group cursor-default rounded-lg border border-[var(--color-border)] bg-[var(--color-surface)] px-4 py-2 font-mono text-sm text-[var(--color-text)] transition-all hover:border-[var(--color-accent)]/50 hover:bg-[var(--color-accent)]/5"
+                  style={{
+                    ["--skill-color" as string]: categoryColors[activeCategory],
+                  }}
+                >
+                  <span
+                    className="mr-2 inline-block h-2 w-2 rounded-full"
+                    style={{ backgroundColor: categoryColors[activeCategory] }}
+                  />
+                  {skill.name}
+                </motion.span>
               ))}
             </motion.div>
           </AnimatePresence>

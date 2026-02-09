@@ -13,7 +13,6 @@ export interface Project {
 
 export interface Skill {
   name: string;
-  level: number; // 0-100
   icon?: string;
   category: SkillCategory;
 }
@@ -42,4 +41,9 @@ export interface SocialLink {
   icon: string;
 }
 
-export type ThemeVariant = "dracula" | "nord" | "gruvbox" | "monokai" | "default";
+export type ThemeVariant =
+  | "dracula"
+  | "nord"
+  | "gruvbox"
+  | "monokai"
+  | "default";
